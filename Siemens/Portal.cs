@@ -1379,9 +1379,9 @@ namespace TiaMcpServer.Siemens
                     sb.AppendLine($"{IndentText(indent + 1)}+- PlcSoftware: {plcSoftware.Name}");
                 }
 
-                if (softwareContainer?.Software is HmiSoftware hmiSoftware)
+                if (Openness.TiaMajorVersion >= 19)
                 {
-                    sb.AppendLine($"{IndentText(indent + 1)}+- HmiSoftware: {hmiSoftware.Name}");
+                    TryGetHmiSoftwareInfo(sb, softwareContainer, indent);
                 }
 
                 if (softwareContainer?.Software is HmiTarget hmiTarget)
@@ -1937,6 +1937,14 @@ namespace TiaMcpServer.Siemens
         }
 
         #endregion
+
+        private void TryGetHmiSoftwareInfo(StringBuilder sb, SoftwareContainer? softwareContainer, int indent)
+        {                  
+            if (softwareContainer?.Software is HmiSoftware hmiSoftware)
+            {
+                sb.AppendLine($"{IndentText(indent + 1)}+- HmiSoftware: {hmiSoftware.Name}");
+            } 
+        }
 
         #endregion
 
